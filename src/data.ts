@@ -24,44 +24,44 @@ export const regulations: KOVRegulation[] = [
     revisionDate: "06.06.2021",
     deadlineDays: "15 tööpäeva",
     processingDays: "10 tööpäeva",
-    mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse vähemalt 15 tööpäeva enne"]
-    s1["KOV: vaatab taotluse ja lisadokumendid läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["KOV-korraldaja: kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga)"])
-    s5["KOV: ametnik kooskõlastab valla spetsialistidega 10 tööpäeva jooksul"]
-    s6{"KOV: kas luba anda?"}
-    s7["KOV: väljastab loa või keeldub motiveeritud otsusega"]
-    s8["KOV: teavitab loa andmisest järgmisel tööpäeval"]
-    s9["KOV: teavitab keeldumisest 3 tööpäeva jooksul"]
+    mermaid: `flowchart TD
+  classDef default font-family:Inter,sans-serif,font-size:12px
+  classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+  classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --> s6
-    s6 --|Ei|--> s7
-    s6 --|Jah|--> s7
-    s7 --> s8
-    s7 --> s9
+  Start([Protsessi algus]) --> A[korraldaja: esitab taotluse ja lisad]
+  A --> B{ametnik: kas on puudusi?}
+  
+  B -- Jah --> C[ametnik: määrab tähtaja puuduste kõrvaldamiseks]
+  C --> D{korraldaja: kas kõrvaldab?}
+  
+  D -- Ei --> E[ametiasutus: jätab taotluse läbi vaatamata]
+  E --> End([Protsessi lõpp])
+  
+  D -- Jah --> F
+  B -- Ei --> F[ametnik: korraldab kooskõlastusringi]
+  
+  F --> G[Päästeamet ja PPA: kooskõlastavad taotluse]
+  G --> H[Sisespetsialistid: kooskõlastavad 10 tööpäeva jooksul]
+  
+  H --> I{ametiasutus: otsustab loa andmise}
+  
+  I -- Jah --> J[ametnik: väljastab loa ja teavitab taotlejat]
+  I -- Ei --> K[ametiasutus: keeldub loast ja teavitab taotlejat]
+  
+  J --> End
+  K --> End
 
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s6 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+  class B,D,I decision
+  class G external`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse vähemalt 15 tööpäeva enne" },
-      { role: "KOV", action: "ametnik vaatab taotluse ja lisadokumendid läbi" },
-      { role: "KOV", action: "Kas esineb puudusi?" },
-      { role: "(Jah) KOV", action: "määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV-korraldaja", action: "kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga korral)" },
-      { role: "KOV", action: "ametnik kooskõlastab valla spetsialistidega ja määrab tingimused 10 tööpäeva jooksul" },
-      { role: "KOV", action: "väljastab loa või keeldub motiveeritud otsusega" },
-      { role: "KOV", action: "teavitab loa andmisest järgmisel tööpäeval" },
-      { role: "KOV", action: "teavitab keeldumisest 3 tööpäeva jooksul" }
+      { role: "korraldaja", action: "esitab allkirjastatud taotluse koos lisadega vähemalt 15 tööpäeva enne üritust" },
+      { role: "ametnik", action: "vaatab taotluse ja lisadokumentid läbi" },
+      { role: "ametnik", action: "määrab puuduste korral tähtaja nende kõrvaldamiseks" },
+      { role: "korraldaja", action: "kõrvaldab puudused määratud tähtajaks" },
+      { role: "ametnik", action: "edastab taotluse kooskõlastamiseks Päästeametile, Politsei- ja Piirivalveametile ning ametiasutuse sisespetsialistidele" },
+      { role: "ametiasutus", action: "otsustab loa andmise või sellest keeldumise" },
+      { role: "ametnik", action: "väljastab loa ja teavitab korraldajat otsusest" }
     ]
   },
   {
@@ -72,34 +72,28 @@ export const regulations: KOVRegulation[] = [
     revisionDate: "01.03.2022",
     deadlineDays: "15 tööpäeva",
     processingDays: "10 tööpäeva",
-    mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse hiljemalt 15 tööpäeva enne"]
-    s1["KOV: vaatab läbi ja kontrollib"]
-    s2{"KOV: kas puudusi esineb?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa korraldusena 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
+    mermaid: `flowchart TD
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A[Korraldaja: koostab taotluse ja lisadokumendid] --> B[Korraldaja: kooskõlastab taotluse PPA ja Päästeametiga]
+    B:::external --> C[Korraldaja: esitab taotluse vallavalitsusele]
+    C --> D{Kas taotlus on nõuetekohane?}
+    D:::decision -- Ei --> E[Vallavalitsus: määrab tähtaja puuduste kõrvaldamiseks]
+    E --> F[Korraldaja: kõrvaldab puudused]
+    F --> D
+    D -- Jah --> G[Vallavalitsus: otsustab loa andmise või keeldumise]
+    G --> H[Vallavalitsus: vormistab korralduse ja teavitab korraldajat]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse hiljemalt 15 tööpäeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "annab loa 10 tööpäeva jooksul korraldusena" }
+      { role: "Korraldaja", action: "koostab taotluse ja lisadokumendid" },
+      { role: "Korraldaja", action: "kooskõlastab taotluse Politsei- ja Piirivalveametiga ning lahtise tule või pürotehnika kasutamisel Päästeametiga" },
+      { role: "Korraldaja", action: "esitab taotluse vallavalitsusele hiljemalt 15 tööpäeva enne üritust" },
+      { role: "Vallavalitsus", action: "vaatab taotluse läbi ja kontrollib puuduste olemasolu" },
+      { role: "Vallavalitsus", action: "määrab vajadusel tähtaja puuduste kõrvaldamiseks" },
+      { role: "Korraldaja", action: "kõrvaldab puudused määratud tähtajaks" },
+      { role: "Vallavalitsus", action: "otsustab loa andmise või sellest keeldumise 10 tööpäeva jooksul" },
+      { role: "Vallavalitsus", action: "vormistab otsuse vallavalitsuse korraldusena ja teavitab korraldajat" }
     ]
   },
   {
@@ -111,35 +105,29 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "10 tööpäeva",
     processingDays: "10 päeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse vähemalt 10 tööpäeva enne"]
-    s1["KOV: vaatab läbi ja kontrollib"]
-    s2{"KOV: kas puudusi esineb?"}
-    s3["KOV: määrab tähtaja kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa korraldusega 10 päeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8(["KOV: edastab loa teadmiseks PPA-le"])
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
+    A[Korraldaja: Kooskõlastuste hankimine välistelt osapooltelt ja maaomanikult] ::: external
+    B[Korraldaja: Taotluse ja lisadokumentide esitamine vallavalitsusele]
+    C{Vallavalitsus: Kas taotlus vastab nõuetele ja on põhjendatud?} ::: decision
+    D[Vallavalitsus: Loa andmisest keeldumine ja korraldaja teavitamine]
+    E[Vallavalitsus: Loa väljastamine vallavalitsuse korraldusega]
+    F[Vallavalitsus: PPA ja Põllumajandus- ja Toiduameti teavitamine] ::: external
 
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A --> B
+    B --> C
+    C -- Ei --> D
+    C -- Jah --> E
+    E --> F`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse vähemalt 10 tööpäeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "väljastab loa korraldusega 10 päeva jooksul" }
+      { role: "korraldaja", action: "hankib kinnisasja või maa-ala omaniku nõusoleku ning vajadusel kooskõlastused Transpordiametilt, Keskkonnaametilt, Päästeametilt ja Politsei- ja Piirivalveametilt" },
+      { role: "korraldaja", action: "esitab vallavalitsusele allkirjastatud kirjaliku taotluse koos kõigi nõutavate lisadokumentidega hiljemalt 10 tööpäeva enne ürituse toimumist" },
+      { role: "vallavalitsus", action: "vaatab esitatud taotluse läbi ja kontrollib selle vastavust nõuetele" },
+      { role: "vallavalitsus", action: "otsustab loa andmise või sellest keeldumise 10 päeva jooksul alates nõuetekohase taotluse saamisest" },
+      { role: "vallavalitsus", action: "vormistab otsuse vallavalitsuse korraldusena ja väljastab selle korraldajale" },
+      { role: "vallavalitsus", action: "edastab loa andmise korralduse teadmiseks Politsei- ja Piirivalveametile ning toidu käitlemise korral ka Põllumajandus- ja Toiduametile" }
     ]
   },
   {
@@ -151,39 +139,33 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "10 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 20-30 tööpäeva enne"]
-    s1["KOV: vaatab taotluse ja lisadokumendid läbi 10 tööpäeva jooksul"]
-    s2{"KOV: kas on vaja lisadokumente?"}
-    s3["KOV: määra tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga)"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa korraldusega 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest motiveeritud otsusega"]
-    s8["KOV: teavitab PPA-d loa andmisest või keeldumisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start(["Korraldaja esitab taotluse"]) --> Review["Vallavalitsus vaatab taotluse läbi"]
+    Review --> CheckMissing{"Kas esineb puudusi?"}:::decision
+    
+    CheckMissing -- Jah --> Fix["Korraldaja kõrvaldab puudused"]
+    Fix --> Review
+    
+    CheckMissing -- Ei --> ExtCoord["Väliste osapoolte kooskõlastused (PPA, PA, TTJA jt)"]:::external
+    ExtCoord --> RiskType{"Kõrgendatud turvarisk?"}:::decision
+    
+    RiskType -- Jah --> GovOrder["Vallavalitsuse korraldus"]
+    RiskType -- Ei --> OfficialDec["Määratud teenistuja otsus"]
+    
+    GovOrder --> Notify["Korraldaja teavitamine"]
+    OfficialDec --> Notify
+    Notify --> End(["Protsessi lõpp"])`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse hiljemalt 20-30 tööpäeva enne" },
-      { role: "KOV", action: "vaatab taotluse ja selle lisadokumendid läbi 10 tööpäeva jooksul" },
-      { role: "KOV", action: "Kas on vaja lisadokumente või kooskõlastusi?" },
-      { role: "(Jah) KOV", action: "määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga korral)" },
-      { role: "KOV", action: "otsustab loa andmise 10 tööpäeva jooksul korraldusega" },
-      { role: "KOV", action: "teavitab PPA-d ja kooskõlastanud ametkondi" }
+      { role: "Korraldaja", action: "esitab vormikohase taotluse ja lisadokumentid digitaalselt läbi SPOKU keskkonna või kirjalikult (vähemalt 20–30 tööpäeva enne üritust)" },
+      { role: "Vallavalitsus", action: "vaatab taotluse ja lisadokumendid läbi 10 tööpäeva jooksul" },
+      { role: "Vallavalitsus", action: "kontrollib andmete ja kooskõlastuste piisavust ning määrab vajadusel tähtaja puuduste kõrvaldamiseks" },
+      { role: "Korraldaja", action: "kõrvaldab puudused ja esitab vajadusel nõutud kooskõlastused väliste ametkondadega (PPA, Päästeamet, TTJA jt)" },
+      { role: "Vallavalitsus", action: "(kõrgendatud turvariski korral) otsustab loa andmise või sellest keeldumise korraldusega 10 tööpäeva jooksul" },
+      { role: "Ametnik", action: "(tavajuhul) otsustab loa andmise või sellest keeldumise" },
+      { role: "Vallavalitsus", action: "teavitab korraldajat tehtud otsusest" }
     ]
   },
   {
@@ -194,37 +176,28 @@ export const regulations: KOVRegulation[] = [
     revisionDate: "11.06.2021",
     deadlineDays: "10 tööpäeva",
     processingDays: "5 tööpäeva",
-    mermaid: `graph TD
-    s0["Korraldaja: esitab teate vähemalt 10 tööpäeva enne"]
-    s1["KOV: kontrollib teadet ja menetleb"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab ürituse pidamise loa"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: edastab loa andmise teate PPA Lääne Prefektuurile"]
+    mermaid: `flowchart TD
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start((Algus)) --> A
+    A["Korraldaja: kooskõlastab koha omaniku või valdajaga"]:::external --> B
+    B["Korraldaja: esitab linnavalitsusele ürituse teate"] --> C
+    C{"Linnavalitsus: kontrollib nõuetele vastavust"}:::decision -->|Puudused| D
+    D["Linnavalitsus: määrab tähtaja puuduste kõrvaldamiseks"] --> E
+    E["Korraldaja: kõrvaldab puudused või esitab selgitusi"] --> B
+    C -- Vastab nõuetele --> F["Linnavalitsus: väljastab ürituse pidamise loa"]
+    F --> G["Linnavalitsus: teavitab Politseid ja teisi organeid"]:::external
+    G --> End((Lõpp))`,
     steps: [
-      { role: "Korraldaja", action: "esitab teate vähemalt 10 tööpäeva enne" },
-      { role: "KOV", action: "kontrollib teadet ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "väljastab ürituse pidamise loa" },
-      { role: "KOV", action: "edastab teate loa andmise kohta PPA Lääne Prefektuurile" }
+      { role: "Korraldaja", action: "hangib toimumiskoha omaniku või valdaja kooskõlastuse" },
+      { role: "Korraldaja", action: "esitab linnavalitsusele vähemalt 10 tööpäeva enne üritust avaliku ürituse teate ja vajalikud lisadokumentid (liiklusskeem, turvaplaan jms)" },
+      { role: "Linnavalitsus", action: "kontrollib teate vastavust nõuetele ning nõutud dokumentide olemasolu" },
+      { role: "Linnavalitsus", action: "(puuduste korral) määrab tähtaja puuduste kõrvaldamiseks või küsib täiendavaid selgitusi" },
+      { role: "Korraldaja", action: "(vajadusel) kõrvaldab puudused või esitab selgitused" },
+      { role: "Linnavalitsus", action: "annab ürituse pidamiseks loa" },
+      { role: "Linnavalitsus", action: "edastab teate loa andmise kohta Politsei- ja Piirivalveametile ning teistele haldus- ja järelevalveorganitele" }
     ]
   },
   {
@@ -236,35 +209,41 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "21-30 kalendripäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 21-30 päeva enne"]
-    s1["KOV: teenistuja vaatab taotluse läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab korraldusega loa 10 päeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: teavitab PPA-d loa andmisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start(["Protsessi algus"]) --> A["Korraldaja esitab taotluse ja lisadokumendid"]
+    A --> B["Teenistuja vaatab taotluse läbi"]
+    B --> C{"Kas taotluses on puudusi?"}:::decision
+    
+    C -- Jah --> D["Teenistuja määrab tähtaja puuduste kõrvaldamiseks"]
+    D --> E{"Kas korraldaja kõrvaldab puudused?"}:::decision
+    E -- Ei --> F["Taotlus jäetakse läbi vaatamata"]
+    E -- Jah --> G["Võetakse menetlusse"]
+    
+    C -- Ei --> G
+    
+    G --> H{"Vallavalitsuse otsus 10 päeva jooksul"}:::decision
+    
+    H -- Loa andmisest keeldumine --> I["Motiveeritud keeldumise otsus"]
+    H -- Loa andmine --> J["Loa andmine vallavalitsuse korraldusega"]
+    
+    I --> K["Korraldaja teavitamine"]:::external
+    J --> L["Korraldaja ja PPA teavitamine"]:::external
+    L --> M["Loa avalikustamine valla veebilehel"]
+    
+    K --> End(["Protsessi lõpp"])
+    M --> End
+    F --> End`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 21-30 päeva enne" },
-      { role: "KOV", action: "teenistuja vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga korral)" },
-      { role: "KOV", action: "otsustab loa andmise 10 päeva jooksul ja teavitab PPA-d" }
+      { role: "korraldaja", action: "esitab vähemalt 21 päeva (liikluse ümberkorraldamisel 30 päeva) enne üritust taotluse koos nõutud lisadokumentidega (sh kinnistu omaniku nõusolek, vajadusel liiklusskeem, turvaplaan ja kooskõlastused)" },
+      { role: "teenistuja", action: "vaatab taotluse läbi" },
+      { role: "teenistuja", action: "puuduste esinemisel määrab tähtaja nende kõrvaldamiseks" },
+      { role: "korraldaja", action: "kõrvaldab puudused määratud tähtaja jooksul" },
+      { role: "vallavalitsus", action: "otsustab loa andmise või sellest keeldumise 10 päeva jooksul nõuetekohase taotluse saamisest" },
+      { role: "vallavalitsus", action: "teavitab otsusest korraldajat, Politsei- ja Piirivalveametit ning vajadusel teisi osapooli" },
+      { role: "vallavalitsus", action: "avalikustab väljastatud loa valla veebilehel" }
     ]
   },
   {
@@ -276,36 +255,31 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "14-30 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 14-30 tööpäeva enne"]
-    s1["KOV: vaatab läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: saadab otsuse korraldajale ja PPA-le"]
+  classDef default font-family:Inter,sans-serif,font-size:12px
+  classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+  classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+  A[Korraldaja: esitab taotluse ja lisad SPOKU keskkonnas] --> B[KOV: vaatab taotluse läbi]
+  B --> C{Kas esineb puudusi?}:::decision
+  C -- Jah --> D[KOV: määras tähtaja puuduste kõrvaldamiseks]
+  D --> E{Kas puudused kõrvaldatakse?}:::decision
+  E -- Ei --> F[KOV: jätab taotluse läbi vaatamata]
+  E -- Jah --> G[KOV: võtab taotluse menetlusse]
+  C -- Ei --> G
+  G --> H[PPA ja Päästeamet: kooskõlastavad taotluse]:::external
+  H --> I{Kas luba väljastatakse?}:::decision
+  I -- Jah --> J[KOV: vormistab ja väljastab avaliku ürituse loa]
+  I -- Ei --> K[KOV: teeb motiveeritud keeldumise otsuse]
+  J --> L[KOV: toimetab otsuse korraldajale ja teavitab ameteid]:::external
+  K --> L`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 14-30 tööpäeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "otsustab loa andmise 10 tööpäeva jooksul ja teavitab PPA-d" }
+      { role: "Korraldaja", action: "esitab taotluse ja lisad SPOKU keskkonnas vähemalt 14 tööpäeva (teatud juhtudel 30 päeva) enne üritust" },
+      { role: "KOV", action: "vaatab taotluse läbi ja kontrollib dokumentide nõuetekohasust" },
+      { role: "KOV", action: "puuduste ilmnemisel määrab korraldajale tähtaja niiden kõrvaldamiseks" },
+      { role: "Korraldaja", action: "kõrvaldab puudused määratud tähtajaks" },
+      { role: "KOV", action: "edastab taotluse kooskõlastamiseks Politsei- ja Piirivalveametile ning Päästeametile" },
+      { role: "KOV", action: "annab loa või keeldub sellest motiveeritud otsusega 10 tööpäeva jooksul" },
+      { role: "KOV", action: "toimetab otsuse korraldajale kätte 2 tööpäeva jooksul ja teavitab kooskõlastanud asutusi" }
     ]
   },
   {
@@ -317,37 +291,31 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "15 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 15-30 päeva enne"]
-    s1["KOV: ametnik vaatab läbi"]
-    s2{"KOV: kas taotlus on täielik?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["KOV: kooskõlastab PPA ja Päästeametetiga (kõrgendatud turvariskiga)"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV/Ametnik: väljastab loa 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: teavitab taotlejat ja PPA-d"]
+  classDef default font-family:Inter,sans-serif,font-size:12px
+  classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+  classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Ei|--> s3
-    s2 --|Jah|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+  A[Korraldaja: esitab taotluse ja lisad iseteeninduskeskkonnas] --> B[KOV ametnik: vaatab taotluse läbi]
+  B --> C{Kas esineb puudusi?}:::decision
+  C -- Jah --> D[KOV ametnik: määrab tähtaja puuduste kõrvaldamiseks]
+  D --> E{Kas puudused kõrvaldatakse?}:::decision
+  E -- Ei --> F[KOV ametnik: jätab taotluse läbi vaatamata]
+  E -- Jah --> G[KOV ametnik: võtab taotluse menetlusse]
+  C -- Ei --> G
+  G --> H[Välised osapooled: kooskõlastavad taotluse või saavad teavituse]:::external
+  H --> I{Kas luba väljastatakse?}:::decision
+  I -- Jah --> J[KOV ametnik / Vallavalitsus: vormistab ja väljastab loa]
+  I -- Ei --> K[KOV ametnik / Vallavalitsus: teeb motiveeritud keeldumise otsuse]
+  J --> L[KOV ametnik: teavitab korraldajat ja asutusi otsusest]:::external
+  K --> L`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse vähemalt 15 tööpäeva enne (30 päeva kui kooskõlastused)" },
-      { role: "KOV", action: "ametnik vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV", action: "kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariski korral)" },
-      { role: "KOV/Ametnik", action: "väljastab loa või keeldub 10 tööpäeva jooksul" },
-      { role: "KOV", action: "teavitab taotlejat ja PPA-d" }
+      { role: "Korraldaja", action: "esitab taotluse ja lisad elektroonselt iseteeninduskeskkonnas vähemalt 15 tööpäeva (teatud kooskõlastuste vajadusel 30 kalendripäeva) enne üritust" },
+      { role: "KOV ametnik", action: "vaatab taotluse läbi ja kontrollib dokumentide nõuetekohasust" },
+      { role: "KOV ametnik", action: "puuduste ilmnemisel määrab korraldajale tähtaja nende kõrvaldamiseks" },
+      { role: "Korraldaja", action: "kõrvaldab puudused määratud tähtajaks" },
+      { role: "KOV ametnik", action: "edastab taotluse kooskõlastamiseks või teavitab asjakohaseid asutusi (PPA, Päästeamet, Keskkonnaamet jt)" },
+      { role: "KOV ametnik / Vallavalitsus", action: "annab loa või keeldub sellest motiveeritud otsusega" },
+      { role: "KOV ametnik", action: "teavitab taotlejat, Politsei- ja Piirivalveametit ning vajadusel teisi ametiasutusi loa andmisest või sellest keeldumisest" }
     ]
   },
   {
@@ -359,36 +327,39 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "20-30 päeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 20-30 päeva enne"]
-    s1["KOV: teenistuja vaatab läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA-ga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: annab loa 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest motiveeritud korraldusega"]
-    s8["KOV: teavitab PPA-d"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef DP fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef EXT fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
+    A["Korraldaja: Kooskõlastab taotluse politseikonstaabliga"]:::EXT
+    B["Korraldaja: Esitab taotluse vallavalitsusele"]
+    C["Menetleja: Kontrollib taotluse vastavust ja dokumente"]
+    D{"Kas on puudusi?"}:::DP
+    E["Menetleja: Määrab tähtaja puuduste kõrvaldamiseks"]
+    F["Korraldaja: Kõrvaldab puudused"]
+    G{"Kas anda luba?"}:::DP
+    H["Vallavalitsus: Väljastab avaliku ürituse loa"]
+    I["Vallavalitsus: Esitab motiveeritud keeldumise"]
+    J["Vallavalitsus: Teavitab PPA-d ja teisi organeid"]:::EXT
 
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A --> B
+    B --> C
+    C --> D
+    D -- Jah --> E
+    E --> F
+    F --> C
+    D -- Ei --> G
+    G -- Jah --> H
+    G -- Ei --> I
+    H --> J`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 20-30 päeva enne" },
-      { role: "KOV", action: "teenistuja vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab Politseiga" },
-      { role: "KOV", action: "annab loa 10 tööpäeva jooksul ja teavitab PPA-d" }
+      { role: "Korraldaja", action: "kooskõlastab taotluse politseikonstaabliga" },
+      { role: "Korraldaja", action: "esitab vormikohase loa taotluse vallavalitsusele vähemalt 20 päeva (liikluse ümberkorraldamisel 30 päeva) enne üritust" },
+      { role: "Menetleja", action: "vaatab taotluse läbi ja kontrollib selle vastavust nõuetele ning dokumentide olemasolu" },
+      { role: "Menetleja", action: "puuduste ilmnemisel määrab tähtaja nende kõrvaldamiseks" },
+      { role: "Korraldaja", action: "kõrvaldab puudused määratud tähtaja jooksul" },
+      { role: "Vallavalitsus", action: "annab loa 10 tööpäeva jooksul nõuetekohase taotluse laekumisest või esitab motiveeritud keeldumise" },
+      { role: "Vallavalitsus", action: "edastab loa korraldajale ning ärakirja Politsei- ja Piirivalveametile ja teistele organitele" }
     ]
   },
   {
@@ -400,36 +371,27 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "14 päeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse vähemalt 14 päeva enne"]
-    s1["KOV: vaatab läbi ja kontrollib"]
-    s2{"KOV: kas puudusi esineb?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: teavitab korraldajat ja PPA-d"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: Esitab taotluse"] --> B{"Kas on kõrgendatud turvarisk?"}:::decision
+    B -- Jah --> C["Korraldaja: Kooskõlastab turvaplaani PPA ja PA-ga"]:::external
+    C --> D
+    B -- Ei --> D["Vallavalitsus: Vaatab taotluse läbi"]
+    D --> E{"Kas on puudusi?"}:::decision
+    E -- Jah --> F["Korraldaja: Kõrvaldab puudused"]
+    F --> D
+    E -- Ei --> G["Vallavalitsus: Teeb otsuse 10 tööpäeva jooksul"]
+    G --> H["Vallavalitsus: Teavitab korraldajat 2 tööpäeva jooksul"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse vähemalt 14 päeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "otsustab loa andmise 10 tööpäeva jooksul" }
+      { role: "Korraldaja", action: "esitab vormikohase loa taotluse vähemalt 14 päeva enne üritust" },
+      { role: "Korraldaja", action: "lisab kõrgendatud turvariski korral esmase turvaplaani" },
+      { role: "Korraldaja", action: "kooskõlastab lõpliku turvaplaani Põhja Päästekeskuse ja Põhja prefektuuriga" },
+      { role: "Korraldaja", action: "lisab vajadusel maaomaniku või Harju Maavalitsuse kooskõlastuse" },
+      { role: "Vallavalitsus", action: "registreerib taotluse ja kontrollib seda, määrates vajadusel tähtaja puuduste kõrvaldamiseks" },
+      { role: "Vallavalitsus", action: "otsustab loa andmise korraldusega 10 tööpäeva jooksul" },
+      { role: "Vallavalitsus", action: "teavitab korraldajat otsusest 2 tööpäeva jooksul" }
     ]
   },
   {
@@ -441,37 +403,26 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "20 kalendripäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse üldjuhul 20 kalendripäeva enne"]
-    s1["KOV: menetleja kontrollib taotlust 3 tööpäeva jooksul"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["KOV: kooskõlastab valla asutustega ja vajadusel PPA/PäA-ga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa haldusaktina"]
-    s7["KOV: jätab loa andmata"]
-    s8["KOV: teavitab PPA-d ja PäA-d"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: Esitab taotluse"] --> B["Menetleja: Kontrollib taotlust 3 tööpäeva jooksul"]
+    B --> C{"Kas on puudusi?"}:::decision
+    C -- Jah --> D["Korraldaja: Kõrvaldab puudused"]
+    D --> B
+    C -- Ei --> E["Menetleja: Suunab siseseks kooskõlastamiseks"]
+    E --> F{"Kas on erijuhtum?"}:::decision
+    F -- Jah --> G["Vallavalitsus: Annab loa"]
+    F -- Ei --> H["Menetleja: Annab loa"]
+    G --> I["Menetleja: Teavitab Politseid ja Päästeametit"]:::external
+    H --> I`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse üldjuhul 20 kalendripäeva enne" },
-      { role: "KOV", action: "menetleja kontrollib taotlust 3 tööpäeva jooksul ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV", action: "kooskõlastab taotluse valla asutustega ja vajadusel PPA/PäA-ga" },
-      { role: "KOV", action: "otsustab loa andmise ja väljastab loa haldusaktina" },
-      { role: "KOV", action: "teavitab PPA-d ja PäA-d" }
+      { role: "Korraldaja", action: "esitab taotluse üldjuhul 20 kalendripäeva enne üritust" },
+      { role: "Menetleja", action: "kontrollib 3 tööpäeva jooksul taotluse vastavust ja määrab vajadusel tähtaja puuduste kõrvaldamiseks" },
+      { role: "Menetleja", action: "suunab taotluse kooskõlastamiseks asjaomastele valla teenistujatele või asutustele" },
+      { role: "Vallavalitsus/Menetleja", action: "annab loa haldusaktiga (Vallavalitsus erijuhul, Menetleja tavajuhul)" },
+      { role: "Menetleja", action: "teavitab loa andmisest viivitamata Politseid, Päästeametit ja vajadusel teisi ametkondi" }
     ]
   },
   {
@@ -483,33 +434,25 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "2 nädalat",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 2 nädalat enne"]
-    s1["KOV: ametnik vaatab läbi"]
-    s2{"KOV: kas puudusi esineb?"}
-    s3["KOV: nõuab täiendavaid dokumente ja kooskõlastusi"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga)"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa valitsuse korraldusega"]
-    s7["KOV: jätab taotluse rahuldamata"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: Hangib vajalikud kooskõlastused PPA, PA jm"]:::external --> B["Korraldaja: Esitab taotluse koos lisadega"]
+    B --> C["Ametnik: Vaatab taotluse läbi"]
+    C --> D{"Kas on puudusi?"}:::decision
+    D -- Jah --> E["Korraldaja: Esitab täiendavad dokumendid"]
+    E --> C
+    D -- Ei --> F["Ametnik: Esitab eelnõu valitsuse istungile"]
+    F --> G["Vallavalitsus: Otsustab loa andmise korraldusega"]
+    G --> H["Vallavalitsus: Teavitab Politseid"]:::external`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse vähemalt kaks nädalat enne" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga korral)" },
-      { role: "KOV", action: "ametnik vaatab läbi ja esitab valitsusele eelnõu 5 tööpäeva jooksul" },
-      { role: "KOV", action: "väljastab loa korraldusega" }
+      { role: "Korraldaja", action: "esitab taotluse vähemalt 2 nädalat enne üritust" },
+      { role: "Korraldaja", action: "esitab koos taotlusega kinnistu omaniku, Päästeameti, Politsei ja vajadusel Keskkonnaameti kooskõlastused" },
+      { role: "Ametnik", action: "vaatab taotluse läbi ja nõuab vajadusel täiendavaid dokumente või kooskõlastusi" },
+      { role: "Ametnik", action: "esitab valitsuse istungile eelnõu loa andmiseks 5 tööpäeva jooksul" },
+      { role: "Vallavalitsus", action: "otsustab loa andmise korraldusega" },
+      { role: "Vallavalitsus", action: "teavitab loa andmisest viivitamatult Politsei- ja Piirivalveameti Ida prefektuuri" }
     ]
   },
   {
@@ -521,35 +464,27 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "15 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 15 tööpäeva enne"]
-    s1["KOV: menetleja vaatab läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja kõrvaldamiseks"]
-    s4(["KOV-korraldaja: kooskõlastab PPA ja Päästeametiga (vajadusel)"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa (allkirjastab vallavanem või osakonnajuhataja)"]
-    s7["KOV: keeldub loa andmisest motiveeritud otsusega"]
-    s8["KOV: teavitab PPA-d loa andmisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: Esitab taotluse"] --> B["Menetleja: Vaatab taotluse läbi"]
+    B --> C{"Kas on puudusi?"}:::decision
+    C -- Jah --> D["Korraldaja: Kõrvaldab puudused"]
+    D --> B
+    C -- Ei --> E["Menetleja: Kooskõlastab taotluse 10 tööpäeva jooksul"]
+    E --> F["Menetleja: Koostab eelnõu"]
+    F --> G["Loa andja: Otsustab loa andmise"]
+    G --> H["Ametiasutus: Väljastab loa"]
+    H --> I["Ametiasutus: Teavitab politseid"]:::external`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 15 tööpäeva enne" },
-      { role: "KOV", action: "menetleja vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV-korraldaja", action: "kooskõlastab PPA ja Päästeametiga (vajadusel)" },
-      { role: "KOV", action: "väljastab loa ja teavitab PPA-d" }
+      { role: "Korraldaja", action: "esitab allkirjastatud taotluse vähemalt 15 tööpäeva enne üritust" },
+      { role: "Menetleja", action: "vaatab taotluse läbi ja nõuab vajadusel täiendavaid dokumente või kooskõlastusi" },
+      { role: "Menetleja", action: "määrab puuduste korral tähtaja nende kõrvaldamiseks" },
+      { role: "Menetleja", action: "kooskõlastab taotluse kümne tööpäeva jooksul" },
+      { role: "Menetleja", action: "koostab loa eelnõu ja edastab selle loa andjale" },
+      { role: "Loa andja", action: "otsustab loa andmise ja allkirjastab selle" },
+      { role: "Ametiasutus", action: "väljastab loa korraldajale ja teavitab politseid" }
     ]
   },
   {
@@ -561,36 +496,24 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "30 kalendripäeva",
     processingDays: "14 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 30 kalendripäeva enne"]
-    s1["KOV: ametnik vaatab läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja puuduste kõrvaldamiseks"]
-    s4(["KOV-korraldaja: kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga)"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: vallavalitsus väljastab loa 14 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: teavitab PPA-d ürituse korraldamisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: Kooskõlastab ürituse PA ja PPA-ga"]:::external --> B["Korraldaja: Esitab taotluse iseteeninduses"]
+    B --> C["Ametnik: Vaatab taotluse läbi"]
+    C --> D{"Kas on puudusi?"}:::decision
+    D -- Jah --> E["Korraldaja: Kõrvaldab puudused max 7 päeva jooksul"]
+    E --> C
+    D -- Ei --> F["Ametiasutus: Teavitab politseid"]:::external
+    F --> G["Vallavalitsus: Otsustab loa andmise 14 tp jooksul"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 30 kalendripäeva enne" },
-      { role: "KOV", action: "ametnik vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV-korraldaja", action: "kooskõlastab PPA ja Päästeametiga (kõrgendatud turvariskiga korral)" },
-      { role: "KOV", action: "teavitab PPA-d" },
-      { role: "KOV", action: "vallavalitsus väljastab loa 14 tööpäeva jooksul" }
+      { role: "Korraldaja", action: "kooskõlastab kõrgendatud turvariskiga ürituse Päästeameti ja Politseiga ning hangib maaomaniku nõusoleku" },
+      { role: "Korraldaja", action: "esitab taotluse vähemalt 30 kalendripäeva enne üritust iseteeninduskeskkonnas" },
+      { role: "Ametnik", action: "vaatab taotluse läbi" },
+      { role: "Ametnik", action: "määrab puuduste korral tähtaja (kuni 7 päeva) nende kõrvaldamiseks" },
+      { role: "Ametiasutus", action: "teavitab politseid ürituse korraldamisest" },
+      { role: "Vallavalitsus", action: "otsustab loa andmise 14 tööpäeva jooksul arvates taotluse saamisest" }
     ]
   },
   {
@@ -602,35 +525,30 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "7-14 tööpäeva",
     processingDays: "3 päeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab teatise 7-14 tööpäeva enne"]
-    s1["KOV: menetleja vaatab läbi"]
-    s2{"KOV: kas on vaja täiendavaid selgitusi?"}
-    s3["Korraldaja: esitab selgitused"]
-    s4(["KOV-korraldaja: kooskõlastab PPAga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: teavitab PPA-d ja veebitoimetajat"]
-    s7["KOV: otsustab lubamise vähemalt 3 päeva enne"]
-    s8["KOV: keeldub loa andmisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s7
-    s5 --|Ei|--> s8
-    s7 --> s6
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start((Algus)) --> K1["Korraldaja: esitab teatise"]
+    K1 --> M1["Menetleja: vaatab läbi ja kontrollib"]
+    M1 --> D1{"Kas on puudusi?"}:::decision
+    D1 -- Jah --> K2["Korraldaja: kõrvaldab puudused"]
+    K2 --> M1
+    D1 -- Ei --> M2["Menetleja: suunab kooskõlastamisele"]
+    M2 --> E1["Kooskõlastaja: hindab ja kooskõlastab"]:::external
+    E1 --> D2{"Kas kooskõlastatud?"}:::decision
+    D2 -- Jah --> M3["Menetleja: otsustab loa andmise"]
+    D2 -- Ei --> Reject["Luba ei anta"]
+    M3 --> M4["Menetleja: teavitab osapooli ja avaldab info"]
+    M4 --> End((Lõpp))`,
     steps: [
-      { role: "Korraldaja", action: "esitab teatise 7-14 tööpäeva enne" },
-      { role: "KOV", action: "menetleja vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV-korraldaja", action: "kooskõlastab PPAga (vajadusel)" },
-      { role: "KOV", action: "otsustab lubamise vähemalt 3 päeva enne ja teavitab PPA-d" }
+      { role: "korraldaja", action: "esitab avaliku ürituse teatise (vähemalt 7 või 14 päeva enne)" },
+      { role: "menetleja", action: "vaatab teatise läbi ja kontrollib andmete õigsust ning määrab vajadusel tähtaja puuduste kõrvaldamiseks" },
+      { role: "korraldaja", action: "kõrvaldab puudused (vajadusel)" },
+      { role: "menetleja", action: "korraldab teatise kooskõlastamise pädevate asutustega" },
+      { role: "kooskõlastaja", action: "annab kooskõlastuse või nõuab täiendavat teavet/toiminguid" },
+      { role: "menetleja", action: "otsustab ürituse lubamise või mittelubamise (vähemalt 3 päeva enne üritust)" },
+      { role: "menetleja", action: "teavitab otsusest korraldajat ja ametiasutusi (PPA, vajadusel Päästeamet ja TTJA) ning avaldab info valla veebilehel" }
     ]
   },
   {
@@ -642,33 +560,26 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "15 päeva",
     processingDays: "14 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 15 päeva enne"]
-    s1["KOV: vaatab läbi"]
-    s2{"KOV: kas nõuded on täidetud?"}
-    s3["KOV: nõuab täiendavaid andmeid"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga (kui tuleneb seadusest)"])
-    s5{"KOV: kas kooskõlastused on positiivsed?"}
-    s6["KOV: väljastab loa korraldusega 14 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Ei|--> s3
-    s2 --|Jah|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start((Algus)) --> K1["Korraldaja: esitab taotluse"]
+    K1 --> D1{"Kõrgendatud risk?"}:::decision
+    D1 -- Jah --> E1["Korraldaja: kooskõlastab turvaplaani PPA/PA-ga"]:::external
+    E1 --> VV1
+    D1 -- Ei --> VV1["Vallavalitsus: menetleb taotlust"]
+    VV1 --> VV2{"Kas otsus on positiivne?"}:::decision
+    VV2 -- Jah --> VV3["Vallavalitsus: väljastab loa"]
+    VV2 -- Ei --> Reject["Vallavalitsus: keeldub loast"]
+    VV3 --> VV4["Vallavalitsus: teavitab korraldajat"]
+    Reject --> VV4
+    VV4 --> End((Lõpp))`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 15 päeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga (kui tuleneb seadusest)" },
-      { role: "KOV", action: "väljastab loa korraldusega 14 tööpäeva jooksul" }
+      { role: "korraldaja", action: "esitab vormikohase taotluse (vähemalt 15 päeva enne)" },
+      { role: "korraldaja", action: "esitab lõpliku turvaplaani Lõuna Päästekeskusele ja Lõuna prefektuurile (kõrgendatud turvariski korral)" },
+      { role: "vallavalitsus", action: "menetleb taotlust ja otsustab loa andmise (14 tööpäeva jooksul)" },
+      { role: "vallavalitsus", action: "teavitab korraldajat otsusest (3 tööpäeva jooksul)" }
     ]
   },
   {
@@ -680,37 +591,28 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "21 päeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab kooskõlastustaotluse 21 päeva enne"]
-    s1["KOV: vaatab läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja kõrvaldamiseks"]
-    s4(["Korraldaja: teavitab PPA-d ja PäA-d"])
-    s5(["Korraldaja: kooskõlastab PPA ja PäA-ga (vastavatel juhtudel)"])
-    s6{"KOV: kas luba anda?"}
-    s7["KOV: väljastab loa 10 tööpäeva jooksul"]
-    s8["KOV: keeldub loa andmisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --> s6
-    s6 --|Jah|--> s7
-    s6 --|Ei|--> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s6 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start((Algus)) --> K1["Korraldaja: hangib vajalikud kooskõlastused"]
+    K1 --> E1["Välised osapooled: PPA, PA, tee omanik"]:::external
+    E1 --> K2["Korraldaja: esitab taotluse KOV-ile"]
+    K2 --> M1["Menetleja: vaatab taotluse läbi"]
+    M1 --> D1{"Kas on puudusi?"}:::decision
+    D1 -- Jah --> K3["Korraldaja: kõrvaldab puudused"]
+    K3 --> M1
+    D1 -- Ei --> VV1["Vallavalitsus: langetab otsuse"]
+    VV1 --> VV2["Vallavalitsus: teavitab korraldajat"]
+    VV2 --> End((Lõpp))`,
     steps: [
-      { role: "Korraldaja", action: "esitab kooskõlastustaotluse 21 päeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "teavitab PPA-d ja Päästeametit" },
-      { role: "Korraldaja", action: "kooskõlastab PPA (liikluse korral) ja PäA-ga (lõkke korral)" },
-      { role: "KOV", action: "väljastab loa 10 tööpäeva jooksul või keeldub" }
+      { role: "korraldaja", action: "esitab kooskõlastustaotluse (vähemalt 21 päeva enne)" },
+      { role: "korraldaja", action: "taotleb politsei kooskõlastuse ja tee omaniku nõusoleku (liikluse ümberkorraldamisel)" },
+      { role: "korraldaja", action: "kooskõlastab avaliku lõkke tegemise Päästeametiga (vajadusel)" },
+      { role: "menetleja", action: "vaatab taotluse ja lisad läbi (3 tööpäeva jooksul) ja määrab vajadusel puuduste kõrvaldamiseks tähtaja" },
+      { role: "korraldaja", action: "kõrvaldab puudused (vajadusel)" },
+      { role: "vallavalitsus", action: "annab loa või jätab andmata (10 tööpäeva jooksul)" },
+      { role: "vallavalitsus", action: "teavitab korraldajat otsusest (3 tööpäeva jooksul)" }
     ]
   },
   {
@@ -722,33 +624,24 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "20 päeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 20 päeva enne"]
-    s1["KOV: menetleja vaatab läbi 7 päeva jooksul"]
-    s2{"KOV: kas puudusi esineb?"}
-    s3["KOV: nõuab täiendavaid dokumente või kooskõlastusi"]
-    s4(["Korraldaja: kooskõlastab PPA ja Päästeametiga (vajadusel)"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: annab loa korraldusega ja teavitab 3 päeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start((Algus)) --> K1["Korraldaja: esitab taotluse"]
+    K1 --> M1["Menetleja: vaatab taotluse läbi"]
+    M1 --> D1{"Lisadokumente vaja?"}:::decision
+    D1 -- Jah --> K2["Korraldaja: esitab lisadokumendid"]
+    K2 --> M1
+    D1 -- Ei --> VV1["Vallavalitsus: annab loa korraldusega"]
+    VV1 --> VV2["Vallavalitsus: edastab loa korraldajale"]
+    VV2 --> End((Lõpp))`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 20 päeva enne" },
-      { role: "KOV", action: "menetleja vaatab läbi 7 päeva jooksul ja määra tähtaja puuduste kõrvaldamiseks" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga (vajadusel)" },
-      { role: "KOV", action: "annab loa korraldusega ja teavitab 3 päeva jooksul" }
+      { role: "korraldaja", action: "esitab taotluse (vähemalt 20 päeva enne)" },
+      { role: "menetleja", action: "vaatab taotluse läbi (7 päeva jooksul) ja otsustab täiendavate dokumentide või kooskõlastuste vajaduse" },
+      { role: "korraldaja", action: "esitab nõutud lisad (vajadusel)" },
+      { role: "vallavalitsus", action: "annab loa korraldusega (pärast kõigi dokumentide laekumist)" },
+      { role: "vallavalitsus", action: "saadab korralduse korraldajale (3 päeva jooksul)" }
     ]
   },
   {
@@ -758,37 +651,25 @@ export const regulations: KOVRegulation[] = [
     url: "https://www.riigiteataja.ee/akt/408052014057",
     revisionDate: "01.07.2014",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 14 päeva enne"]
-    s1["KOV: vaatab läbi"]
-    s2{"KOV: kas on vaja täiendavaid kooskõlastusi?"}
-    s3["Korraldaja: hangib kooskõlastused"]
-    s4(["KOV: kooskõlastab PPAga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: keeldub loa andmisest"]
-    s7["KOV: otsustab loa 10 päeva jooksul"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Ei|--> s6
-    s5 --|Jah|--> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    Start((Algus)) --> K1["Korraldaja: esitab taotluse ja skeemid"]
+    K1 --> M1["Menetleja: vaatab taotluse läbi"]
+    M1 --> D1{"Kas on vaja lisasid?"}:::decision
+    D1 -- Jah --> K2["Korraldaja: esitab lisadokumendid"]
+    K2 --> M1
+    D1 -- Ei --> M2["Menetleja: otsustab loa andmise"]
+    M2 --> M3["Menetleja: teavitab korraldajat"]
+    M3 --> End((Lõpp))`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 14 päeva enne" },
-      { role: "KOV", action: "vaatab läbi" },
-      { role: "KOV", action: "Kas on vaja täiendavaid kooskõlastusi?" },
-      { role: "(Jah) Korraldaja", action: "hangib kooskõlastused" },
-      { role: "(Ei) KOV", action: "kooskõlastab PPAga" },
-      { role: "KOV", action: "Kas luba anda?" },
-      { role: "KOV", action: "keeldub loa andmisest" },
-      { role: "KOV", action: "otsustab loa 10 päeva jooksul" }
+      { role: "korraldaja", action: "esitab allkirjastatud taotluse (vähemalt 14 päeva enne)" },
+      { role: "korraldaja", action: "lisab kooskõlastatud liikluskorralduse skeemi (liikluse ümberkorraldamisel)" },
+      { role: "menetleja", action: "vaatab taotluse läbi ning otsustab lisadokumentide või kooskõlastuste vajaduse" },
+      { role: "korraldaja", action: "esitab täiendavad dokumendid (vajadusel)" },
+      { role: "menetleja", action: "otsustab loa andmise (10 päeva jooksul)" },
+      { role: "menetleja", action: "teavitab korraldajat otsusest" }
     ]
   },
   {
@@ -800,37 +681,30 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "30 päeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 30 päeva enne"]
-    s1["KOV: vaatab läbi ja kontrollib"]
-    s2{"KOV: kas puudusi esineb?"}
-    s3["KOV: määrab tähtaja kõrvaldamiseks"]
-    s4(["KOV: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: keeldub loa andmisest"]
-    s7["KOV: annab loa 10 tööpäeva jooksul korraldusega"]
-    s8["KOV: teavitab PPA-d ja Päästeametit"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Ei|--> s6
-    s5 --|Jah|--> s7
-    s7 --> s8
-    s6 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: esitab taotluse"] --> B["Ametiasutus: registreerib taotluse"]
+    B --> C["Menetleja: vaatab läbi"]
+    C --> D{"Kas on puudusi?"}:::decision
+    D -- Jah --> E["Menetleja: määrab tähtaja kõrvaldamiseks"]
+    E --> F["Korraldaja: kõrvaldab puudused"]
+    F --> C
+    D -- Ei --> G["Vallavalitsus: vaatab läbi"]
+    G --> H{"Kas anda luba?"}:::decision
+    H -- Jah --> I["Vallavalitsus: vormistab loa korraldusega"]
+    I --> J["Ametiasutus: kannab kalendrisse"]
+    H -- Ei --> K["Vallavalitsus: teatab keeldumisest"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 30 päeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "annab loa 10 tööpäeva jooksul korraldusega" },
-      { role: "KOV", action: "teavitab PPA-d ja Päästeametit" }
+      { role: "Korraldaja", action: "esitab taotluse koos lisadega vähemalt 30 päeva enne üritust" },
+      { role: "Ametiasutus", action: "registreerib esitatud taotluse" },
+      { role: "Menetleja", action: "vaatab taotluse ja lisad läbi" },
+      { role: "Menetleja", action: "(puuduste korral) määrab tähtaja puuduste kõrvaldamiseks" },
+      { role: "Korraldaja", action: "(vajadusel) kõrvaldab puudused määratud tähtajaks" },
+      { role: "Vallavalitsus", action: "otsustab loa andmise või keeldumise 10 tööpäeva jooksul" },
+      { role: "Vallavalitsus", action: "vormistab loa andmise korraldusena (keeldumisel teatab sellest korraldajale koos põhjendustega)" },
+      { role: "Ametiasutus", action: "kannab ürituse valla veebilehel olevasse kalendrisse" }
     ]
   },
   {
@@ -842,32 +716,25 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "14 päeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 14 päeva enne"]
-    s1["KOV: menetleja vaatab läbi"]
-    s2(["KOV: kooskõlastab PPA ja Päästeametiga"])
-    s3["KOV: menetleb taotlust"]
-    s4{"KOV: kas luba anda?"}
-    s5["KOV: annab loa 10 tööpäeva jooksul"]
-    s6["KOV: keeldub loa andmisest"]
-    s7["KOV: teavitab PPA-d ja Päästeametit"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --> s3
-    s3 --> s4
-    s4 --|Jah|--> s5
-    s4 --|Ei|--> s6
-    s5 --> s7
-    s6 --> s7
-
-    style s2 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s4 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: esitab taotluse"] --> B["Menetleja: vaatab läbi"]
+    B --> C{"Vajadus kooskõlastada?"}:::decision
+    C -- Jah --> D["Menetleja: edastab riigiasutustele"]:::external
+    D --> E["Väline osapool: kooskõlastab"]:::external
+    E --> F["Vallavalitsus: vaatab läbi"]
+    C -- Ei --> F
+    F --> G{"Kas anda luba?"}:::decision
+    G -- Jah --> H["Vallavalitsus: väljastab loa"]
+    G -- Ei --> I["Vallavalitsus: teatab keeldumisest"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 14 päeva enne" },
-      { role: "KOV", action: "menetleja vaatab läbi ja koordineerib PPA ja PäA-ga" },
-      { role: "KOV", action: "otsustab loa andmise 10 tööpäeva jooksul" },
-      { role: "KOV", action: "teavitab PPA-d ja Päästeametit" }
+      { role: "Korraldaja", action: "esitab allkirjastatud taotluse vähemalt 14 päeva enne üritust" },
+      { role: "Menetleja", action: "vaatab taotluse läbi ja otsustab lisadokumentide vajaduse" },
+      { role: "Menetleja", action: "(vajadusel) edastab taotluse kooskõlastamiseks riigi ametiasutustele või teistele organisatsioonidele" },
+      { role: "Vallavalitsus", action: "otsustab loa andmise või keeldumise 10 tööpäeva jooksul" },
+      { role: "Vallavalitsus", action: "(keeldumisel) teatab sellest kirjalikult 3 tööpäeva jooksul" }
     ]
   },
   {
@@ -879,34 +746,19 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "10 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 10 tööpäeva enne"]
-    s1["KOV: vaatab läbi ja määrab vajadusel lisatingimused"]
-    s2{"KOV: kas oht on välistatud?"}
-    s3(["KOV: kooskõlastab PPA ja Päästeametiga"])
-    s4{"KOV: kas luba anda?"}
-    s5["KOV: väljastab loa"]
-    s6["KOV: keeldub loa andmisest või tühistab loa"]
-    s7["KOV: teavitab PPA-d ja Päästeametit"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Ei|--> s6
-    s2 --|Jah|--> s3
-    s3 --> s4
-    s4 --|Jah|--> s5
-    s4 --|Ei|--> s6
-    s5 --> s7
-    s6 --> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: esitab taotluse"] --> B["Vallavalitsus: vaatab läbi"]
+    B --> C{"Kas anda luba?"}:::decision
+    C -- Jah --> D["Vallavalitsus: väljastab loa"]
+    D --> E["Vallavalitsus: teavitab prefektuuri ja päästekeskust"]:::external
+    C -- Ei --> F["Vallavalitsus: keeldub loast"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse hiljemalt 10 tööpäeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab vajadusel lisatingimused" },
-      { role: "KOV", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "väljastab loa või keeldub/tühistab" },
-      { role: "KOV", action: "teavitab viivitamata PPA-d ja Päästeametit" }
+      { role: "Korraldaja", action: "esitab taotluse vähemalt 10 tööpäeva enne ürituse toimumist" },
+      { role: "Vallavalitsus", action: "vaatab taotluse läbi ja otsustab loa andmise" },
+      { role: "Vallavalitsus", action: "teavitab nõusoleku andmisest viivitamata asukohajärgset prefektuuri ja päästekeskust" }
     ]
   },
   {
@@ -918,34 +770,26 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "15-20 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 15-20 tööpäeva enne"]
-    s1["KOV: vaatab läbi ja määrab puuduste kõrvaldamiseks tähtaja"]
-    s2{"KOV: kas taotlus on nõuetekohane?"}
-    s3(["Korraldaja: kooskõlastab PPA ja Päästeametiga"])
-    s4{"KOV: kas luba anda?"}
-    s5["KOV: annab loa korraldusega"]
-    s6["KOV: keeldub loa andmisest"]
-    s7["KOV: teavitab PPA-d ja Päästeametit"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s1
-    s3 --> s4
-    s4 --|Jah|--> s5
-    s4 --|Ei|--> s6
-    s5 --> s7
-    s6 --> s7
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s3 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s4 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: esitab taotluse"] --> B["Valitsus: vaatab läbi"]
+    B --> C{"Kas on puudusi?"}:::decision
+    C -- Jah --> D["Valitsus: määrab tähtaja kõrvaldamiseks"]
+    D --> E["Korraldaja: kõrvaldab puudused"]
+    E --> B
+    C -- Ei --> F["Valitsus: teavitab menetlusse võtmisest"]
+    F --> G["Valitsus: otsustab loa andmise"]
+    G --> H{"Kas anda luba?"}:::decision
+    H -- Jah --> I["Valitsus: väljastab korralduse"]
+    H -- Ei --> J["Valitsus: keeldub ja põhjendab"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 15-20 tööpäeva enne" },
-      { role: "Korraldaja", action: "kooskõlastab PPA ja Päästeametiga" },
-      { role: "KOV", action: "vaatab läbi ning määrab puuduste kõrvaldamiseks tähtaja" },
-      { role: "KOV", action: "otsustab loa andmise ja teavitab PPA-d ning PäA-d" }
+      { role: "Korraldaja", action: "esitab taotluse vähemalt 15 tööpäeva (või 20 tööpäeva keerulisemate tingimuste korral) enne" },
+      { role: "Valitsus", action: "vaatab läbi taotluse ja lisadokumendid" },
+      { role: "Valitsus", action: "(puuduste korral) määrab tähtaja puuduste kõrvaldamiseks" },
+      { role: "Valitsus", action: "teavitab korraldajat e-posti teel taotluse menetlusse võtmisest" },
+      { role: "Valitsus", action: "otsustab loa andmise või keeldumise korraldusega" }
     ]
   },
   {
@@ -957,35 +801,27 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "10-30 päeva",
     processingDays: "14 kalendripäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 10-30 päeva enne"]
-    s1["KOV: vaatab läbi"]
-    s2{"KOV: kas on kõrgendatud risk?"}
-    s3(["KOV: kooskõlastab taotluse PPA ja Päästeametiga"])
-    s4["KOV: menetleb"]
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: annab loa 14 kalendripäeva jooksul"]
-    s7["KOV: keeldub loa andmisesst"]
-    s8["KOV: teavitab PPA-d ja Päästeametit"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s4
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s3 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: esitab taotluse SPOKUs"] --> B["Ametnik: vaatab läbi"]
+    B --> C{"Vajadus kooskõlastada?"}:::decision
+    C -- Jah --> D["Ametnik: saadab PPA/PA-le"]:::external
+    D --> E["Väline osapool: kooskõlastab"]:::external
+    E --> F["Vallavalitsus: otsustab loa andmise"]
+    C -- Ei --> F
+    F --> G{"Kas anda luba?"}:::decision
+    G -- Jah --> H["Vallavalitsus: väljastab loa"]
+    H --> I["Vallavalitsus: teavitab PPA-d/PA-d"]:::external
+    G -- Ei --> J["Vallavalitsus: teatab korraldajale ja ametitele"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 10-30 päeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV", action: "kooskõlastab taotluse PPA ja Päästeametiga (kõrgendatud turvariskiga korral)" },
-      { role: "KOV", action: "otsustab loa andmise 14 kalendripäeva jooksul ja teavitab ametiasutusi" }
+      { role: "Korraldaja", action: "esitab taotluse läbi iseteeninduskeskkonna SPOKU (kõrgendatud riskiga 30 päeva, tavaline 10 päeva enne)" },
+      { role: "Vallavalitsuse ametnik", action: "(vajadusel) saadab taotluse kooskõlastusteks PPA-le ja/või PA-le ning teadmiseks TTJA-le" },
+      { role: "Vallavalitsus", action: "annab loa 14 kalendripäeva jooksul vallavalitsuse korraldusega" },
+      { role: "Vallavalitsus", action: "informeerib loa andmisest PPA-d ja PA-d" },
+      { role: "Vallavalitsus", action: "(keeldumisel) teatab sellest kirjalikult 3 tööpäeva jooksul" },
+      { role: "Menetleja", action: "(keeldumisel) informeerib kooskõlastanud ametiasutusi 2 tööpäeva jooksul" }
     ]
   },
   {
@@ -997,37 +833,27 @@ export const regulations: KOVRegulation[] = [
     deadlineDays: "15 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `graph TD
-    s0["Korraldaja: esitab taotluse 15 tööpäeva enne"]
-    s1["KOV: vaatab läbi"]
-    s2{"KOV: kas esineb puudusi?"}
-    s3["KOV: määrab tähtaja kõrvaldamiseks"]
-    s4(["KOV: kooskõlastab PPA ja Päästeametiga"])
-    s5{"KOV: kas luba anda?"}
-    s6["KOV: väljastab loa 10 tööpäeva jooksul"]
-    s7["KOV: keeldub loa andmisest"]
-    s8["KOV: teavitab PPA-d ja Päästeametit"]
+    classDef default font-family:Inter,sans-serif,font-size:12px
+    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
 
-    s0 --> s1
-    s1 --> s2
-    s2 --|Jah|--> s3
-    s2 --|Ei|--> s4
-    s3 --> s1
-    s4 --> s5
-    s5 --|Jah|--> s6
-    s5 --|Ei|--> s7
-    s6 --> s8
-    s7 --> s8
-
-    style s2 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    style s4 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-    style s5 fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef default font-family:Inter,sans-serif,font-size:12px`,
+    A["Korraldaja: esitab e-taotluse"] --> B["Ametnik: kontrollib taotlust"]
+    B --> C{"Kõrgendatud turvarisk?"}:::decision
+    C -- Jah --> D["Vallavalitsus: kooskõlastab PPA/PA-ga"]:::external
+    D --> E["Väline osapool: kooskõlastab"]:::external
+    E --> F["Ametnik: otsustab loa andmise"]
+    C -- Ei --> F
+    F --> G{"Kas anda luba?"}:::decision
+    G -- Jah --> H["Ametnik: väljastab loa"]
+    H --> I["Ametnik: teavitab PPA/PA/TTJA"]:::external
+    G -- Ei --> J["Ametnik: teatab keeldumisest"]`,
     steps: [
-      { role: "Korraldaja", action: "esitab taotluse 15 tööpäeva enne" },
-      { role: "KOV", action: "vaatab läbi ja määrab tähtaja puuduste kõrvaldamiseks" },
-      { role: "KOV", action: "kooskõlastab PPA ja Päästeametit (vajadusel)" },
-      { role: "KOV", action: "väljastab loa 10 tööpäeva jooksul" },
-      { role: "KOV", action: "teavitab PPA-d ja Päästeametit" }
+      { role: "Korraldaja", action: "esitab elektroonilise taotluse vähemalt 15 tööpäeva enne" },
+      { role: "Ametnik", action: "kontrollib vastavust ja nõuab vajadusel puuduste kõrvaldamist" },
+      { role: "Vallavalitsus", action: "(vajadusel) edastab taotluse kooskõlastamiseks PPA-le ja/või Päästeametile" },
+      { role: "Ametnik", action: "annab loa kirjaliku otsusega 10 tööpäeva jooksul (suuremate ürituste puhul otsustab vallavalitsus)" },
+      { role: "Ametnik", action: "teavitab Põhja prefektuuri, Päästeametit ja vajadusel TTJA-d ürituse toimumisest" },
+      { role: "Ametnik", action: "(keeldumisel) teatab sellest kirjalikult 10 tööpäeva jooksul" }
     ]
   },
   {

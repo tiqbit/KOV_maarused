@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { regulations } from "@/src/data";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Edit2, Save, X, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import mermaid from "mermaid";
@@ -52,6 +52,22 @@ export default function ProcessPage() {
   const navigate = useNavigate();
   const reg = regulations.find((r) => r.id === id);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentChart, setCurrentChart] = useState("");
+  const [editableCode, setEditableCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const storageKey = `mermaid_override_${id}`;
+
+  useEffect(() => {
+    if (reg) {
+      const savedChart = localStorage.getItem(storageKey);
+      const initialChart = savedChart || reg.mermaid;
+      setCurrentChart(initialChart);
+      setEditableCode(initialChart);
+    }
+  }, [reg, id, storageKey]);
+
   if (!reg) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -61,8 +77,31 @@ export default function ProcessPage() {
     );
   }
 
-  const mermaidChart = reg.mermaid;
   const steps = reg.steps;
+
+  const handleEdit = () => {
+    setEditableCode(currentChart);
+    setIsEditing(true);
+    setError(null);
+  };
+
+  const handleSave = async () => {
+    try {
+      await mermaid.parse(editableCode);
+      setCurrentChart(editableCode);
+      localStorage.setItem(storageKey, editableCode);
+      setIsEditing(false);
+      setError(null);
+    } catch (e: any) {
+      setError(e.message || "Vigane Mermaid kood. Palun kontrolli süntaksit.");
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setError(null);
+    setEditableCode(currentChart);
+  };
 
   return (
     <aside className="fixed right-0 top-16 bottom-10 w-full md:w-[850px] bg-white border-l border-slate-200 flex flex-col shadow-2xl z-20 animate-in slide-in-from-right duration-300">
@@ -141,10 +180,67 @@ export default function ProcessPage() {
           </div>
 
           <div className="lg:col-span-7">
-             <div className="sticky top-0">
-                <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-4">Visuaalne protsessiskeem</h4>
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 min-h-[400px] flex items-center justify-center overflow-auto">
-                    <Mermaid chart={mermaidChart} />
+             <div className="sticky top-0 h-full flex flex-col">
+                <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Visuaalne protsessiskeem</h4>
+                    <div className="flex gap-2">
+                        {!isEditing ? (
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={handleEdit}
+                                className="h-7 text-[10px] gap-1.5 px-2.5"
+                            >
+                                <Edit2 className="h-3 w-3" />
+                                Muuda
+                            </Button>
+                        ) : (
+                            <>
+                                <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    onClick={handleCancel}
+                                    className="h-7 text-[10px] gap-1.5 px-2.5 text-slate-500"
+                                >
+                                    <X className="h-3 w-3" />
+                                    Katkesta
+                                </Button>
+                                <Button 
+                                    variant="default" 
+                                    size="sm" 
+                                    onClick={handleSave}
+                                    className="h-7 text-[10px] gap-1.5 px-2.5 bg-blue-600 hover:bg-blue-700"
+                                >
+                                    <Save className="h-3 w-3" />
+                                    Salvesta
+                                </Button>
+                            </>
+                        )}
+                    </div>
+                </div>
+                
+                <div className={`flex-1 bg-white rounded-xl border border-slate-200 shadow-sm p-4 min-h-[400px] flex flex-col overflow-hidden ${isEditing ? 'bg-slate-50' : ''}`}>
+                    {isEditing ? (
+                        <div className="flex flex-col h-full gap-3">
+                            {error && (
+                                <div className="bg-red-50 border border-red-100 rounded-lg p-3 flex gap-2 items-start text-red-700 text-xs animate-in fade-in slide-in-from-top-1">
+                                    <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                                    <p>{error}</p>
+                                </div>
+                            )}
+                            <textarea
+                                value={editableCode}
+                                onChange={(e) => setEditableCode(e.target.value)}
+                                className="flex-1 w-full p-4 font-mono text-xs bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none shadow-inner"
+                                placeholder="Sisesta Mermaid kood siia..."
+                                spellCheck={false}
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex items-center justify-center overflow-auto h-full">
+                            <Mermaid chart={currentChart} />
+                        </div>
+                    )}
                 </div>
              </div>
           </div>
