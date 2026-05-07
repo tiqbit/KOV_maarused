@@ -1,17 +1,17 @@
 export interface KOVStep {
-  role: string;
-  action: string;
+  role: string; // Osapool (nt "korraldaja", "ametnik")
+  action: string; // Tegevus või samm protsessis
 }
 
 export interface KOVRegulation {
-  id: string;
-  kov: string;
-  maakond?: string;
-  name: string;
-  url: string;
-  revisionDate: string;
-  mermaid: string;
-  steps: KOVStep[];
+  id: string; // Unikaalne identifikaator (nt "tallinn")
+  kov: string; // Omavalitsuse nimi  (keelemudel ei tohi seda ilma loata muuta)
+  maakond?: string; // Maakond, kuhu omavalitsus kuulub (keelemudel ei tohi seda ilma loata muuta)
+  name: string; // Määruse täielik pealkiri  (keelemudel ei tohi seda ilma loata muuta)
+  url: string; // Link määruse tekstile Riigi Teatajas (keelemudel ei tohi seda ilma loata muuta)
+  revisionDate: string; // Määruse viimase redaktsiooni jõustumise kuupäev (keelemudel ei tohi seda ilma loata muuta)
+  mermaid: string; // Mermaid.js formaadis protsessi kirjeldus
+  steps: KOVStep[]; // Protsessi sammude kirjeldus tekstina
   deadlineDays?: string; // e.g. "15 tööpäeva"
   processingDays?: string; // e.g. "10 tööpäeva"
 }
