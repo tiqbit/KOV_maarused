@@ -6,6 +6,7 @@ export interface KOVStep {
 export interface KOVRegulation {
   id: string;
   kov: string;
+  maakond?: string;
   name: string;
   url: string;
   revisionDate: string;
@@ -19,6 +20,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "alutaguse",
     kov: "Alutaguse vald",
+    maakond: "Ida-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Alutaguse vallas",
     url: "https://www.riigiteataja.ee/akt/403062021021?leiaKehtiv",
     revisionDate: "06.06.2021",
@@ -67,24 +69,24 @@ export const regulations: KOVRegulation[] = [
   {
     id: "anija",
     kov: "Anija vald",
+    maakond: "Harju maakond",
     name: "Anija vallas avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/426022022032?leiaKehtiv",
     revisionDate: "01.03.2022",
     deadlineDays: "15 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `flowchart TD
-    classDef default font-family:Inter,sans-serif,font-size:12px
-    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-
-    A[Korraldaja: koostab taotluse ja lisadokumendid] --> B[Korraldaja: kooskõlastab taotluse PPA ja Päästeametiga]
-    B:::external --> C[Korraldaja: esitab taotluse vallavalitsusele]
-    C --> D{Kas taotlus on nõuetekohane?}
-    D:::decision -- Ei --> E[Vallavalitsus: määrab tähtaja puuduste kõrvaldamiseks]
-    E --> F[Korraldaja: kõrvaldab puudused]
-    F --> D
-    D -- Jah --> G[Vallavalitsus: otsustab loa andmise või keeldumise]
-    G --> H[Vallavalitsus: vormistab korralduse ja teavitab korraldajat]`,
+  classDef default font-family:Inter,sans-serif,font-size:12px
+  classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+  classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+  A[Korraldaja: koostab taotluse ja lisadokumendid] --> B[Korraldaja: kooskõlastab taotluse PPA ja Päästeametiga]
+  B:::external --> C[Korraldaja: esitab taotluse vallavalitsusele]
+  C --> D{Kas taotlus on nõuetekohane?}
+  D:::decision -- Ei --> E[Vallavalitsus: määrab tähtaja puuduste kõrvaldamiseks]
+  E --> F[Korraldaja: kõrvaldab puudused]
+  F --> D
+  D -- Jah --> G[Vallavalitsus: otsustab loa andmise või keeldumise]
+  G --> H[Vallavalitsus: vormistab korralduse ja teavitab korraldajat]`,
     steps: [
       { role: "Korraldaja", action: "koostab taotluse ja lisadokumendid" },
       { role: "Korraldaja", action: "kooskõlastab taotluse Politsei- ja Piirivalveametiga ning lahtise tule või pürotehnika kasutamisel Päästeametiga" },
@@ -99,6 +101,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "antsla",
     kov: "Antsla vald",
+    maakond: "Võru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Antsla vallas",
     url: "https://www.riigiteataja.ee/akt/428062022096",
     revisionDate: "01.07.2022",
@@ -133,6 +136,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "elva",
     kov: "Elva vald",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord Elva vallas",
     url: "https://www.riigiteataja.ee/akt/407102025007",
     revisionDate: "01.01.2026",
@@ -171,6 +175,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "haapsalu",
     kov: "Haapsalu linn",
+    maakond: "Lääne maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/408062021048?leiaKehtiv",
     revisionDate: "11.06.2021",
@@ -203,6 +208,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "haljala",
     kov: "Haljala vald",
+    maakond: "Lääne-Viru maakond",
     name: "Haljala vallas avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/423042022005",
     revisionDate: "01.05.2022",
@@ -234,6 +240,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "harku",
     kov: "Harku vald",
+    maakond: "Harju maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Harku valla haldusterritooriumil",
     url: "https://www.riigiteataja.ee/akt/408042026021?leiaKehtiv",
     revisionDate: "11.04.2026",
@@ -265,6 +272,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "hiiumaa",
     kov: "Hiiumaa vald",
+    maakond: "Hiiu maakond",
     name: "Hiiumaa vallas avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/427042024044?leiaKehtiv",
     revisionDate: "30.04.2024",
@@ -295,6 +303,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "haademeeste",
     kov: "Häädemeeste vald",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Häädemeeste vallas",
     url: "https://www.riigiteataja.ee/akt/412062019001",
     revisionDate: "15.06.2019",
@@ -325,6 +334,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "joelahtme",
     kov: "Jõelähtme vald",
+    maakond: "Harju maakond",
     name: "Jõelähtme valla avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/402052014008",
     revisionDate: "01.07.2014",
@@ -354,6 +364,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "jogeva",
     kov: "Jõgeva vald",
+    maakond: "Jõgeva maakond",
     name: "Jõgeva vallas avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/401072021001",
     revisionDate: "01.09.2021",
@@ -385,6 +396,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "johvi",
     kov: "Jõhvi vald",
+    maakond: "Ida-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Jõhvi vallas",
     url: "https://www.riigiteataja.ee/akt/406102023008?leiaKehtiv",
     revisionDate: "09.10.2023",
@@ -415,6 +427,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "jarva",
     kov: "Järva vald",
+    maakond: "Järva maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/404072025048?leiaKehtiv",
     revisionDate: "07.07.2025",
@@ -447,6 +460,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kadrina",
     kov: "Kadrina vald",
+    maakond: "Lääne-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Kadrina vallas",
     url: "https://www.riigiteataja.ee/akt/408042025036?leiaKehtiv",
     revisionDate: "11.04.2025",
@@ -476,6 +490,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kambja",
     kov: "Kambja vald",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/431082018011",
     revisionDate: "03.09.2018",
@@ -511,6 +526,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kanepi",
     kov: "Kanepi vald",
+    maakond: "Põlva maakond",
     name: "Avaliku ürituse korraldamise nõuded Kanepi vallas",
     url: "https://www.riigiteataja.ee/akt/431102019002",
     revisionDate: "03.11.2019",
@@ -542,6 +558,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kastre",
     kov: "Kastre vald",
+    maakond: "Tartu maakond",
     name: "Kastre valla avaliku ürituse korraldamise kord",
     url: "https://www.riigiteataja.ee/akt/410082018006",
     revisionDate: "13.08.2018",
@@ -575,6 +592,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kehtna",
     kov: "Kehtna vald",
+    maakond: "Rapla maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/410032026007?leiaKehtiv",
     revisionDate: "13.03.2026",
@@ -604,24 +622,24 @@ export const regulations: KOVRegulation[] = [
   {
     id: "keila",
     kov: "Keila linn",
+    maakond: "Harju maakond",
     name: "Keila linna avaliku ürituse korraldamise ja pidamise eeskiri",
     url: "https://www.riigiteataja.ee/akt/408052014057",
     revisionDate: "01.07.2014",
     deadlineDays: "14 päeva",
     processingDays: "10 päeva",
     mermaid: `graph TD
-    classDef default font-family:Inter,sans-serif,font-size:12px
-    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-
-    Start((Algus)) --> K1["Korraldaja: esitab taotluse ja skeemid"]
-    K1 --> M1["Menetleja: vaatab taotluse läbi"]
-    M1 --> D1{"Kas on vaja lisasid?"}:::decision
-    D1 -- Jah --> K2["Korraldaja: esitab lisadokumendid"]
-    K2 --> M1
-    D1 -- Ei --> M2["Menetleja: otsustab loa andmise"]
-    M2 --> M3["Menetleja: teavitab korraldajat"]
-    M3 --> End((Lõpp))`,
+  classDef default font-family:Inter,sans-serif,font-size:12px
+  classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+  classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+  Start((Algus)) --> K1["Korraldaja: esitab taotluse ja skeemid"]
+  K1 --> M1["Menetleja: vaatab taotluse läbi"]
+  M1 --> D1{"Kas on vaja lisasid?"}:::decision
+  D1 -- Jah --> K2["Korraldaja: esitab lisadokumendid"]
+  K2 --> M1
+  D1 -- Ei --> M2["Menetleja: otsustab loa andmise"]
+  M2 --> M3["Menetleja: teavitab korraldajat"]
+  M3 --> End((Lõpp))`,
     steps: [
       { role: "korraldaja", action: "esitab allkirjastatud taotluse (vähemalt 14 päeva enne)" },
       { role: "korraldaja", action: "lisab kooskõlastatud liikluskorralduse skeemi (liikluse ümberkorraldamisel)" },
@@ -634,6 +652,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kihnu",
     kov: "Kihnu vald",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Kihnu vallas",
     url: "https://www.riigiteataja.ee/akt/414052024008?leiaKehtiv",
     revisionDate: "17.05.2024",
@@ -669,6 +688,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kiili",
     kov: "Kiili vald",
+    maakond: "Harju maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/428122023051?leiaKehtiv",
     revisionDate: "31.12.2023",
@@ -699,6 +719,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kohila",
     kov: "Kohila vald",
+    maakond: "Rapla maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/402062015017?leiaKehtiv",
     revisionDate: "05.06.2015",
@@ -723,6 +744,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kohtla-jarve",
     kov: "Kohtla-Järve linn",
+    maakond: "Ida-Viru maakond",
     name: "Kohtla-Järve linnas avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/410122019004",
     revisionDate: "01.01.2020",
@@ -754,6 +776,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kose",
     kov: "Kose vald",
+    maakond: "Harju maakond",
     name: "Kose valla avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/407092023011",
     revisionDate: "10.09.2023",
@@ -786,6 +809,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "kuusalu",
     kov: "Kuusalu vald",
+    maakond: "Harju maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/420122023045?leiaKehtiv",
     revisionDate: "23.12.2023",
@@ -818,6 +842,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "loksa",
     kov: "Loksa linn",
+    maakond: "Harju maakond",
     name: "Loksa linnas avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/416052015003",
     revisionDate: "19.05.2015",
@@ -846,6 +871,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "luunja",
     kov: "Luunja vald",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise kord",
     url: "https://www.riigiteataja.ee/akt/405092023021?leiaKehtiv",
     revisionDate: "01.01.2024",
@@ -872,6 +898,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "laane-harju",
     kov: "Lääne-Harju vald",
+    maakond: "Harju maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/431122024017?leiaKehtiv",
     revisionDate: "03.01.2025",
@@ -903,6 +930,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "laane-nigula",
     kov: "Lääne-Nigula vald",
+    maakond: "Lääne maakond",
     name: "Avalike ürituste korraldamise ja pidamise kord Lääne-Nigula vallas",
     url: "https://www.riigiteataja.ee/akt/425112020022?leiaKehtiv",
     revisionDate: "28.11.2020",
@@ -933,6 +961,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "laaneranna",
     kov: "Lääneranna vald",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/414052025004?leiaKehtiv",
     revisionDate: "17.05.2025",
@@ -964,6 +993,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "luganuse",
     kov: "Lüganuse vald",
+    maakond: "Ida-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/403042025027?leiaKehtiv",
     revisionDate: "06.04.2025",
@@ -994,6 +1024,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "maardu",
     kov: "Maardu linn",
+    maakond: "Harju maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/428062014071",
     revisionDate: "01.07.2014",
@@ -1022,6 +1053,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "muhu",
     kov: "Muhu vald",
+    maakond: "Saare maakond",
     name: "Avalike ürituste korraldamise kord",
     url: "https://www.riigiteataja.ee/akt/425042023005",
     revisionDate: "28.04.2023",
@@ -1052,6 +1084,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "mulgi",
     kov: "Mulgi vald",
+    maakond: "Viljandi maakond",
     name: "Mulgi valla avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/411112020034",
     revisionDate: "14.11.2020",
@@ -1081,6 +1114,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "mustvee",
     kov: "Mustvee vald",
+    maakond: "Jõgeva maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/424092021008?leiaKehtiv",
     revisionDate: "27.09.2021",
@@ -1110,6 +1144,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "marjamaa",
     kov: "Märjamaa vald",
+    maakond: "Rapla maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/419102018015",
     revisionDate: "22.10.2018",
@@ -1139,6 +1174,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "narva",
     kov: "Narva linn",
+    maakond: "Ida-Viru maakond",
     name: "Narva linna avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/401032014022",
     revisionDate: "26.02.2014",
@@ -1171,6 +1207,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "narva-joesuu",
     kov: "Narva-Jõesuu linn",
+    maakond: "Ida-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Narva-Jõesuu linnas",
     url: "https://www.riigiteataja.ee/akt/419122017006",
     revisionDate: "13.12.2017",
@@ -1201,6 +1238,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "noo",
     kov: "Nõo vald",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Nõo vallas",
     url: "https://www.riigiteataja.ee/akt/422052014022",
     revisionDate: "19.05.2014",
@@ -1230,6 +1268,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "otepaa",
     kov: "Otepää vald",
+    maakond: "Valga maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord Otepää vallas",
     url: "https://www.riigiteataja.ee/akt/405102012015",
     revisionDate: "27.09.2012",
@@ -1260,6 +1299,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "paide",
     kov: "Paide linn",
+    maakond: "Järva maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord Paide linnas",
     url: "https://www.riigiteataja.ee/akt/430062021016?leiaKehtiv",
     revisionDate: "13.03.2014",
@@ -1288,6 +1328,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "peipsiaare",
     kov: "Peipsiääre vald",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/403072024021?leiaKehtiv",
     revisionDate: "06.07.2024",
@@ -1319,6 +1360,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "pohja-parnumaa",
     kov: "Põhja-Pärnumaa vald",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/407032019006?leiaKehtiv",
     revisionDate: "10.03.2019",
@@ -1349,6 +1391,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "pohja-sakala",
     kov: "Põhja-Sakala vald",
+    maakond: "Viljandi maakond",
     name: "Põhja-Sakala vallas avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/406112018028",
     revisionDate: "09.11.2018",
@@ -1379,6 +1422,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "poltsamaa",
     kov: "Põltsamaa vald",
+    maakond: "Jõgeva maakond",
     name: "Avaliku ürituse korraldamise kord",
     url: "https://www.riigiteataja.ee/akt/427022018004",
     revisionDate: "02.03.2018",
@@ -1407,6 +1451,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "polva",
     kov: "Põlva vald",
+    maakond: "Põlva maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Põlva vallas",
     url: "https://www.riigiteataja.ee/akt/419092018010?leiaKehtiv",
     revisionDate: "22.09.2018",
@@ -1438,6 +1483,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "parnu",
     kov: "Pärnu linn",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/431052019009",
     revisionDate: "03.06.2019",
@@ -1469,6 +1515,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "raasiku",
     kov: "Raasiku vald",
+    maakond: "Harju maakond",
     name: "Raasiku valla avaliku korra eeskiri",
     url: "https://www.riigiteataja.ee/akt/404092014018",
     revisionDate: "07.09.2014",
@@ -1496,6 +1543,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "rae",
     kov: "Rae vald",
+    maakond: "Harju maakond",
     name: "Rae valla avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/429062023054",
     revisionDate: "02.07.2023",
@@ -1526,6 +1574,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "rakvere-linn",
     kov: "Rakvere linn",
+    maakond: "Lääne-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/430092025025?leiaKehtiv",
     revisionDate: "03.10.2025",
@@ -1554,6 +1603,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "rakvere-vald",
     kov: "Rakvere vald",
+    maakond: "Lääne-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Rakvere vallas",
     url: "https://www.riigiteataja.ee/akt/406072023070?leiaKehtiv",
     revisionDate: "09.07.2023",
@@ -1583,6 +1633,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "rapla",
     kov: "Rapla vald",
+    maakond: "Rapla maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Rapla vallas",
     url: "https://www.riigiteataja.ee/akt/403052024007",
     revisionDate: "06.05.2024",
@@ -1612,6 +1663,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "ruhnu",
     kov: "Ruhnu vald",
+    maakond: "Saare maakond",
     name: "Ruhnu valla avaliku ürituse korraldamise kord",
     url: "https://www.riigiteataja.ee/akt/427062014025",
     revisionDate: "01.07.2014",
@@ -1642,6 +1694,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "rouge",
     kov: "Rõuge vald",
+    maakond: "Võru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/409072021026?leiaKehtiv",
     revisionDate: "12.07.2021",
@@ -1671,6 +1724,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "rapina",
     kov: "Räpina vald",
+    maakond: "Põlva maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/401092021006",
     revisionDate: "04.09.2021",
@@ -1701,6 +1755,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "saarde",
     kov: "Saarde vald",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Saarde vallas",
     url: "https://www.riigiteataja.ee/akt/421012025011",
     revisionDate: "24.01.2025",
@@ -1730,6 +1785,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "saaremaa",
     kov: "Saaremaa vald",
+    maakond: "Saare maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/430052025040?leiaKehtiv",
     revisionDate: "02.06.2025",
@@ -1762,6 +1818,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "saku",
     kov: "Saku vald",
+    maakond: "Harju maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/425042025030?leiaKehtiv",
     revisionDate: "28.04.2025",
@@ -1791,6 +1848,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "saue",
     kov: "Saue vald",
+    maakond: "Harju maakond",
     name: "Korrakaitseseaduse rakendamine Saue vallas",
     url: "https://www.riigiteataja.ee/akt/408052018009",
     revisionDate: "11.05.2018",
@@ -1822,6 +1880,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "setomaa",
     kov: "Setomaa vald",
+    maakond: "Võru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/413062018007",
     revisionDate: "16.06.2018",
@@ -1851,6 +1910,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "sillamae",
     kov: "Sillamäe linn",
+    maakond: "Ida-Viru maakond",
     name: "Sillamäe linna haldusterritooriumil ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/413072023010?leiaKehtiv",
     revisionDate: "16.07.2023",
@@ -1879,26 +1939,26 @@ export const regulations: KOVRegulation[] = [
   {
     id: "tallinna",
     kov: "Tallinna linn",
+    maakond: "Harju maakond",
     name: "Tallinna linnas avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/418032023020?leiaKehtiv",
     revisionDate: "21.03.2023",
     deadlineDays: "10-30 tööpäeva",
     processingDays: "10 tööpäeva",
     mermaid: `flowchart TD
-    classDef default font-family:Inter,sans-serif,font-size:12px
-    classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
-    classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
-
-    A[Korraldaja: esitab taotluse AKIS-es] --> B[Linnakantselei: kontrollib dokumente]
-    B --> C{Kas on puudusi?}:::decision
-    C -- Jah --> D[Korraldaja: kõrvaldab puudused]
-    D --> B
-    C -- Ei --> E[Ametid/PPA/PA: kooskõlastamine]:::external
-    E --> F{Linnakantselei: otsustab loa andmise}:::decision
-    F -- Ei --> G[Korraldaja: teavitamine keeldumisest]
-    F -- Jah --> H[Linnakantselei: väljastab loa]
-    H --> I[PPA: teavitamine loast]:::external
-    H --> J[Linn: info avaldamine veebis]`,
+  classDef default font-family:Inter,sans-serif,font-size:12px
+  classDef decision fill:#fffbeb,stroke:#fbbf24,stroke-width:2px
+  classDef external fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+  A[Korraldaja: esitab taotluse AKIS-es] --> B[Linnakantselei: kontrollib dokumente]
+  B --> C{Kas on puudusi?}:::decision
+  C -- Jah --> D[Korraldaja: kõrvaldab puudused]
+  D --> B
+  C -- Ei --> E[Ametid/PPA/PA: kooskõlastamine]:::external
+  E --> F{Linnakantselei: otsustab loa andmise}:::decision
+  F -- Ei --> G[Korraldaja: teavitamine keeldumisest]
+  F -- Jah --> H[Linnakantselei: väljastab loa]
+  H --> I[PPA: teavitamine loast]:::external
+  H --> J[Linn: info avaldamine veebis]`,
     steps: [
       { role: "Korraldaja", action: "esitab loa taotluse AKIS infosüsteemi kaudu või linnakantseleisse (hiljemalt 10-30 tööpäeva varem)" },
       { role: "Linnakantselei", action: "registreerib taotluse ja kontrollib dokumentide nõuetekohasust" },
@@ -1911,6 +1971,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "tapa",
     kov: "Tapa vald",
+    maakond: "Lääne-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/429032019065",
     revisionDate: "01.04.2019",
@@ -1942,6 +2003,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "tartu-linn",
     kov: "Tartu linn",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/409072022044?leiaKehtiv",
     revisionDate: "12.07.2022",
@@ -1970,6 +2032,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "tartu-vald",
     kov: "Tartu vald",
+    maakond: "Tartu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/424052023010",
     revisionDate: "27.05.2023",
@@ -2001,6 +2064,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "toila",
     kov: "Toila vald",
+    maakond: "Ida-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/403052022002",
     revisionDate: "06.05.2022",
@@ -2032,6 +2096,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "tori",
     kov: "Tori vald",
+    maakond: "Pärnu maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/403042024017?leiaKehtiv",
     revisionDate: "06.04.2024",
@@ -2062,6 +2127,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "torva",
     kov: "Tõrva vald",
+    maakond: "Valga maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/425092020019",
     revisionDate: "01.10.2020",
@@ -2092,6 +2158,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "tyri",
     kov: "Türi vald",
+    maakond: "Järva maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Türi vallas",
     url: "https://www.riigiteataja.ee/akt/403052018076",
     revisionDate: "06.05.2018",
@@ -2120,6 +2187,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "valga",
     kov: "Valga vald",
+    maakond: "Valga maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/409052025006?leiaKehtiv",
     revisionDate: "12.05.2025",
@@ -2150,6 +2218,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "viimsi",
     kov: "Viimsi vald",
+    maakond: "Harju maakond",
     name: "Viimsi vallas avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/420062020029?leiaKehtiv",
     revisionDate: "23.06.2020",
@@ -2179,6 +2248,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "viljandi-linn",
     kov: "Viljandi linn",
+    maakond: "Viljandi maakond",
     name: "Viljandi linna avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/406022024009?leiaKehtiv",
     revisionDate: "09.02.2024",
@@ -2208,6 +2278,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "viljandi-vald",
     kov: "Viljandi vald",
+    maakond: "Viljandi maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/403072021037",
     revisionDate: "06.07.2021",
@@ -2236,6 +2307,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "vinni",
     kov: "Vinni vald",
+    maakond: "Lääne-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/408062018027",
     revisionDate: "11.06.2018",
@@ -2264,6 +2336,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "viru-nigula",
     kov: "Viru-Nigula vald",
+    maakond: "Lääne-Viru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise kord",
     url: "https://www.riigiteataja.ee/akt/429072025002?leiaKehtiv",
     revisionDate: "01.08.2025",
@@ -2298,6 +2371,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "vormsi",
     kov: "Vormsi vald",
+    maakond: "Lääne maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded Vormsi vallas",
     url: "https://www.riigiteataja.ee/akt/422052015002",
     revisionDate: "25.05.2015",
@@ -2330,6 +2404,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "voru-linn",
     kov: "Võru linn",
+    maakond: "Võru maakond",
     name: "Ürituse korraldamise kord",
     url: "https://www.riigiteataja.ee/akt/421062014036",
     revisionDate: "01.07.2014",
@@ -2360,6 +2435,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "voru-vald",
     kov: "Võru vald",
+    maakond: "Võru maakond",
     name: "Avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/429062023081?leiaKehtiv",
     revisionDate: "02.07.2023",
@@ -2390,6 +2466,7 @@ export const regulations: KOVRegulation[] = [
   {
     id: "vaike-maarja",
     kov: "Väike-Maarja vald",
+    maakond: "Lääne-Viru maakond",
     name: "Väike-Maarja vallas avaliku ürituse korraldamise ja pidamise nõuded",
     url: "https://www.riigiteataja.ee/akt/405042052?leiaKehtiv",
     revisionDate: "08.04.2024",

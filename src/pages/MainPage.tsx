@@ -1,6 +1,7 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { regulations } from "@/src/data";
+import { SortField, SortDirection } from "../App";
 import {
   Table,
   TableBody,
@@ -9,16 +10,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { ExternalLink, Search, ArrowUpDown, ChevronUp, ChevronDown, Info } from "lucide-react";
+import { ExternalLink, ArrowUpDown, ChevronUp, ChevronDown, Info, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-type SortField = "kov" | "revisionDate";
-type SortDirection = "asc" | "desc";
+declare global {
+  interface Window {
+    InAadress: any;
+  }
+}
 
-export default function MainPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortField, setSortField] = useState<SortField>("kov");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+interface MainPageProps {
+  sortField: SortField;
+  setSortField: (field: SortField) => void;
+  sortDirection: SortDirection;
+  setSortDirection: (direction: SortDirection) => void;
+  selectedCounty: string;
+  setSelectedCounty: (county: string) => void;
+}
+
+export default function MainPage({
+  sortField,
+  setSortField,
+  sortDirection,
+  setSortDirection,
+  selectedCounty,
+  setSelectedCounty,
+}: MainPageProps) {
+
+  const counties = useMemo(() => {
+    const unique = new Set<string>();
+    regulations.forEach(reg => {
+      if (reg.maakond) unique.add(reg.maakond);
+    });
+    return Array.from(unique).sort((a, b) => a.localeCompare(b, "et"));
+  }, []);
 
   const toggleSort = (field: SortField) => {
     if (sortField === field) {
@@ -30,11 +55,13 @@ export default function MainPage() {
   };
 
   const processedRegulations = useMemo(() => {
-    const filtered = regulations.filter(
-      (reg) =>
-        reg.kov.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        reg.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    let filtered = regulations;
+
+    if (selectedCounty) {
+      filtered = regulations.filter((reg) => 
+        reg.maakond === selectedCounty
+      );
+    }
 
     return [...filtered].sort((a, b) => {
       let comparison = 0;
@@ -47,7 +74,7 @@ export default function MainPage() {
       }
       return sortDirection === "asc" ? comparison : -comparison;
     });
-  }, [searchTerm, sortField, sortDirection]);
+  }, [selectedCounty, sortField, sortDirection]);
 
   const SortIcon = ({ field }: { field: SortField }) => {
     if (sortField !== field) return <ArrowUpDown className="ml-1 h-3 w-3" />;
@@ -61,18 +88,39 @@ export default function MainPage() {
   return (
     <section className="flex-1 p-6 flex flex-col overflow-hidden">
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
-        <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 bg-slate-50/50">
           <h2 className="font-semibold text-slate-700 uppercase text-xs tracking-wider">
             Avaliku ürituse korraldamise määrused ({regulations.length})
           </h2>
-          <div className="relative w-64">
-            <Search className="absolute left-3 top-2 h-3.5 w-3.5 text-slate-400" />
-            <Input
-              placeholder="Otsi omavalitsust..."
-              className="pl-9 h-8 text-sm bg-white border-slate-200 focus:ring-blue-100 placeholder:text-slate-400"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <div className="flex items-center gap-3">
+            <div className="w-44 h-8 relative">
+              <select
+                value={selectedCounty}
+                onChange={(e) => setSelectedCounty(e.target.value)}
+                className="w-full h-full rounded-md border border-slate-200 bg-white px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all appearance-none cursor-pointer pr-10"
+              >
+                <option value="">Vali maakond</option>
+                {counties.map(county => (
+                  <option key={county} value={county}>
+                    {county}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                <ChevronDown className="h-4 w-4" />
+              </div>
+            </div>
+            {selectedCounty && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setSelectedCounty("")}
+                className="h-8 text-slate-400 hover:text-slate-600 px-1"
+                title="Tühjenda"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </div>
 
@@ -81,19 +129,19 @@ export default function MainPage() {
             <TableHeader>
               <TableRow className="hover:bg-transparent border-b border-slate-100">
                 <TableHead 
-                  className="px-2 lg:px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider cursor-pointer hover:text-slate-600 transition-colors w-24 sm:w-32 lg:w-48"
+                  className="px-2 lg:px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider cursor-pointer hover:text-slate-600 transition-colors w-auto sm:w-32 lg:w-48"
                   onClick={() => toggleSort("kov")}
                 >
-                  <div className="flex items-center">
-                    KOV Nimetus <SortIcon field="kov" />
+                  <div className="flex items-center text-left">
+                    KOV <span className="hidden sm:inline ml-1">Nimetus</span> <SortIcon field="kov" />
                   </div>
                 </TableHead>
-                <TableHead className="px-2 lg:px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider w-auto">Määrus</TableHead>
+                <TableHead className="px-1 lg:px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider w-14 sm:w-auto text-center sm:text-left">Määrus</TableHead>
                 <TableHead 
-                  className="px-2 lg:px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider w-20 sm:w-28 lg:w-40 cursor-pointer hover:text-slate-600 transition-colors"
+                  className="px-1 lg:px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider w-24 sm:w-28 lg:w-40 cursor-pointer hover:text-slate-600 transition-colors text-right sm:text-left"
                   onClick={() => toggleSort("revisionDate")}
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-end sm:justify-start">
                     Jõustumine <SortIcon field="revisionDate" />
                   </div>
                 </TableHead>
@@ -106,19 +154,21 @@ export default function MainPage() {
               {processedRegulations.map((reg) => (
                 <TableRow key={reg.id} className="hover:bg-blue-50/30 transition-colors">
                   <TableCell className="px-2 lg:px-6 py-3 font-semibold text-slate-800 text-xs sm:text-sm truncate">{reg.kov}</TableCell>
-                  <TableCell className="px-2 lg:px-6 py-3 overflow-hidden">
+                  <TableCell className="px-1 lg:px-6 py-3 overflow-hidden text-center sm:text-left">
                     <a
                       href={reg.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline inline-flex items-center gap-1 w-full max-w-full"
+                      className="text-blue-600 hover:underline inline-flex items-center justify-center sm:justify-start gap-1 w-full max-w-full"
                     >
                       <span className="truncate hidden sm:block">{reg.name}</span>
                       <span className="sm:hidden font-bold">RT</span>
                       <ExternalLink className="h-3 w-3 opacity-50 shrink-0" />
                     </a>
                   </TableCell>
-                  <TableCell className="px-2 lg:px-6 py-3 font-mono text-[10px] sm:text-xs truncate text-right lg:text-left">{reg.revisionDate}</TableCell>
+                  <TableCell className="px-1 lg:px-6 py-3 font-mono text-[10px] sm:text-xs truncate text-right sm:text-left">
+                    {reg.revisionDate}
+                  </TableCell>
                   <TableCell className="px-2 lg:px-6 py-3 text-center text-[11px] text-slate-500 hidden md:table-cell truncate">
                     {reg.deadlineDays || "—"}
                   </TableCell>

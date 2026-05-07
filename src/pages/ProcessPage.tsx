@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { regulations } from "@/src/data";
 import { ArrowLeft, ExternalLink, Edit2, Save, X, AlertCircle } from "lucide-react";
@@ -15,17 +15,15 @@ mermaid.initialize({
 
 const Mermaid = ({ chart }: { chart: string }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomOrigin, setZoomOrigin] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
     const renderChart = async () => {
       if (ref.current && chart) {
         try {
-          // Generate a unique ID for this specific render instance
           const id = `mermaid-chart-${Math.random().toString(36).slice(2, 11)}`;
-          
-          // Clear current content before rendering
           ref.current.innerHTML = "";
-          
           const { svg } = await mermaid.render(id, chart);
           if (ref.current) {
             ref.current.innerHTML = svg;
@@ -42,8 +40,59 @@ const Mermaid = ({ chart }: { chart: string }) => {
     renderChart();
   }, [chart]);
 
+  const updateOrigin = (clientX: number, clientY: number) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * 100;
+    const y = ((clientY - rect.top) / rect.height) * 100;
+    setZoomOrigin({ x, y });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // Only left click
+    setIsZoomed(true);
+    updateOrigin(e.clientX, e.clientY);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isZoomed) {
+      updateOrigin(e.clientX, e.clientY);
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsZoomed(true);
+    updateOrigin(e.touches[0].clientX, e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isZoomed) {
+      updateOrigin(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  const handleEnd = () => {
+    setIsZoomed(false);
+  };
+
   return (
-    <div className="flex justify-center w-full py-4 overflow-x-auto" ref={ref} />
+    <div 
+      className="flex justify-center w-full py-4 cursor-zoom-in select-none touch-none"
+      ref={ref}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleEnd}
+      onMouseLeave={handleEnd}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleEnd}
+      style={{
+        transform: isZoomed ? 'scale(3)' : 'scale(1)',
+        transformOrigin: `${zoomOrigin.x}% ${zoomOrigin.y}%`,
+        transition: isZoomed ? 'transform 0.15s ease-out' : 'transform 0.2s ease-in-out',
+        zIndex: isZoomed ? 50 : 1,
+      }}
+    />
   );
 };
 
@@ -219,7 +268,7 @@ export default function ProcessPage() {
                     </div>
                 </div>
                 
-                <div className={`flex-1 bg-white rounded-xl border border-slate-200 shadow-sm p-4 min-h-[400px] flex flex-col overflow-hidden ${isEditing ? 'bg-slate-50' : ''}`}>
+                <div className={`flex-1 bg-white rounded-xl border border-slate-200 shadow-sm p-4 min-h-[400px] lg:min-h-[600px] flex flex-col overflow-hidden ${isEditing ? 'bg-slate-50' : ''}`}>
                     {isEditing ? (
                         <div className="flex flex-col h-full gap-3">
                             {error && (
@@ -237,8 +286,8 @@ export default function ProcessPage() {
                             />
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center overflow-auto h-full">
-                            <Mermaid chart={currentChart} />
+                        <div className="flex items-start justify-center overflow-hidden h-full pt-4">
+                            <Mermaid chart={currentChart.trim()} />
                         </div>
                     )}
                 </div>
